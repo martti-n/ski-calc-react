@@ -31,8 +31,8 @@ function Header() {
   };
   return (
     <div>
-      <h1 className="font-bold text-xl text-center">SkiCalc</h1>
-      <div className="flex justify-center mb-3">
+      <h1 className="font-bold text-xl text-center mb-4">SkiCalc</h1>
+      <div className="flex justify-center mb-4">
         <TextField
           id="standard-basic"
           label="Your height"
@@ -41,24 +41,23 @@ function Header() {
         />
       </div>
       <h3 className="text-center">Amount of results</h3>
-      <div className="flex justify-center mb-3">
-        <Select id="demo-simple-select" >
+      <div className="flex justify-center mb-4">
+        <Select id="demo-simple-select" value={amountOfResults} onChange={(e) => setAmountOfResults(e.target.value)}>
           <MenuItem value={10}>10</MenuItem>
           <MenuItem value={15}>15</MenuItem>
           <MenuItem value={20}>20</MenuItem>
         </Select>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-4">
         <Button
           variant="contained"
-          color="default"
           disableElevation
-          onClick={() => setResults(calculateSkis(height, amountOfResults))}
+          onClick={() => setResults(calculateSkis())}
         >
           Calculate
         </Button>
       </div>
-      <div className="flex justify-center"><Results resultItems={results} /></div>
+      <div className="flex justify-center mb-4"><Results resultItems={results} /></div>
     </div>
   );
 }
