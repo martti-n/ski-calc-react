@@ -1,6 +1,18 @@
 import React, { useState } from "react";
+import { styled } from "@material-ui/core/styles";
 import { TextField, Button, Select, MenuItem } from "@material-ui/core";
 import Results from "./Results";
+
+const CalculateButton = styled(Button)({
+  background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  border: 0,
+  borderRadius: 3,
+  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  color: "white",
+  height: 48,
+  padding: "0 30px",
+  outline: 'none !important' 
+});
 
 function Header() {
   const [height, setHeight] = useState("");
@@ -29,6 +41,7 @@ function Header() {
       return skiData;
     }
   };
+
   return (
     <div>
       <h1 className="font-bold text-xl text-center mb-4">SkiCalc</h1>
@@ -49,15 +62,13 @@ function Header() {
         </Select>
       </div>
       <div className="flex justify-center mb-4">
-        <Button
-          variant="contained"
-          disableElevation
-          onClick={() => setResults(calculateSkis())}
-        >
+        <CalculateButton onClick={() => setResults(calculateSkis())}>
           Calculate
-        </Button>
+        </CalculateButton>
       </div>
-      <div className="flex justify-center mb-4"><Results resultItems={results} /></div>
+      <div className="flex justify-center mb-4">
+        <Results resultItems={results} />
+      </div>
     </div>
   );
 }
