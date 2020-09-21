@@ -14,7 +14,7 @@ const CalculateButton = styled(Button)({
   outline: 'none !important' 
 });
 
-function Header() {
+function SkiCalc() {
   const [height, setHeight] = useState("");
   const [amountOfResults, setAmountOfResults] = useState(15);
   const [results, setResults] = useState([]);
@@ -73,4 +73,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default SkiCalc;
