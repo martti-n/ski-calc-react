@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { styled } from "@material-ui/core/styles";
 import { TextField, Button, Select, MenuItem } from "@material-ui/core";
 import Results from "./Results";
+import { useLocation } from 'react-router-dom';
 
 const CalculateButton = styled(Button)({
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -42,9 +43,15 @@ function SkiCalc() {
     }
   };
 
+  const location = useLocation();
+
+  const locationNameWithoutSlash = () => {
+    return location.pathname.substring(1);
+  };
+
   return (
     <div>
-      <h1 className="font-bold text-xl text-center mb-4">SkiCalc</h1>
+      <h1 className="font-bold text-xl text-center mb-4">{ locationNameWithoutSlash().toUpperCase() }</h1>
       <div className="flex justify-center mb-4">
         <TextField
           id="standard-basic"

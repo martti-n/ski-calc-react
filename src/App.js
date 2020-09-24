@@ -1,7 +1,6 @@
 import React from "react";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import { ThemeProvider, makeStyles, styled, useTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import theme from "./theme";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
@@ -10,9 +9,22 @@ import Home from "./Components/Pages/Home";
 import Statistics from "./Components/Pages/Statistics";
 import SkiCalc from "./Components/SkiCalc/SkiCalc";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
+import TopNav from "./Components/Navigation/TopNav";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+const MyList = styled(List)({
+  width: "100%",
+});
 
 const useStyles = makeStyles((theme) => ({
-  drawerPaper: { width: "inherit" },
+  drawerPaper: {
+    width: "inherit",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  listItem: {
+    paddingTop: "30px",
+  },
   pageLayout: {
     paddingTop: "40px",
     display: "flex",
@@ -24,47 +36,62 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <div style={{ display: "flex" }}>
+        { isMobile ? (
+        <>
+        <TopNav />
+        </>
+        ) : (
           <Drawer
-            style={{ width: "240px" }}
-            variant="persistent"
-            anchor="left"
-            open={true}
-            classes={{ paper: classes.drawerPaper }}
-          >
-            <List>
-              <Link to="/" exact>
+          style={{ width: "240px" }}
+          variant="persistent"
+          anchor="left"
+          open={true}
+          classes={{ paper: classes.drawerPaper }}
+        >
+          <MyList>
+            <Link to="/home">
+              <div className={classes.listItem}>
                 <ListItem button>
                   <ListItemIcon>
                     <HomeIcon />
                   </ListItemIcon>
                   <ListItemText primary={"Home"} />
                 </ListItem>
-              </Link>
-              <Link to="/statistics">
+              </div>
+            </Link>
+            <Link to="/statistics">
+              <div className={classes.listItem}>
                 <ListItem button>
                   <ListItemIcon>
                     <EqualizerIcon />
                   </ListItemIcon>
                   <ListItemText primary={"Statistics"} />
                 </ListItem>
-              </Link>
-              <Link to="/skicalc">
+              </div>
+            </Link>
+            <Link to="/skicalc">
+              <div className={classes.listItem}>
                 <ListItem button>
                   <ListItemIcon>
                     <AcUnit />
                   </ListItemIcon>
                   <ListItemText primary={"SkiCalc"} />
                 </ListItem>
-              </Link>
-            </List>
-          </Drawer>
+              </div>
+            </Link>
+          </MyList>
+        </Drawer>
+        )}
+        <div style={{ display: "flex" }}>
           <Switch>
-            <Route exact path="/">
+            <Route path="/home">
               <div className={classes.pageLayout}>
                 <Home />
               </div>
