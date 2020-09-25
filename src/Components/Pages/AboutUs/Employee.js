@@ -5,6 +5,7 @@ import CustomAvatar from './CustomAvatar';
 
 const EmployeeCard = styled(Card)({
   marginBottom: "10px",
+  cursor: 'pointer',
   "&:hover": {
     backgroundColor: "#ececec",
   },
@@ -27,7 +28,6 @@ const useStyles = makeStyles(() => ({
 const Employee = (props) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-
   const body = (
     <EmployeeCard onClick={() => setOpen(true)} className={classes.root}>
       <CardMedia className={classes.media} image="https://i.imgur.com/0KD8K3s.jpg" title="Contemplative Reptile" />
@@ -49,7 +49,8 @@ const Employee = (props) => {
           subheader={`${props.employee.employee_age} years of age, makes ${props.employee.employee_salary} $ a year.`}
         />
       </EmployeeCard>
-      <Modal
+      { open ? (
+        <Modal
         className={classes.modal}
         open={open}
         onClose={() => setOpen(false)}
@@ -58,6 +59,7 @@ const Employee = (props) => {
       >
         {body}
       </Modal>
+      ) : (null) }
     </div>
   );
 };
