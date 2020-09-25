@@ -13,7 +13,6 @@ const locationNameWithoutSlash = () => {
   return ( 
     <div>
       <Typography variant="h3">These are the {locationNameWithoutSlash()}!</Typography>
-      <Typography variant="body1">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam, a!</Typography>
     </div>
    );
 }

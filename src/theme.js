@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core/styles";
 
 // create a theme instance
 
@@ -23,13 +23,21 @@ const theme = createMuiTheme({
         left: "30%",
       },
     },
+    MuiButton: {
+      root: {
+        color: 'white',
+        outline: 'none !important'
+      }
+    },
+    MuiCard: {
+      root: {
+        outline: 'none !important'
+      }
+    }
   },
   props: {
     MuiTextField: {
       variant: "standard",
-    },
-    MuiButton: {
-      variant: "contained",
     },
   },
 });

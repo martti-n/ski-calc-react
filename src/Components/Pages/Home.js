@@ -1,20 +1,11 @@
-import React from "react";
-import { Typography } from "@material-ui/core";
-import { useLocation } from "react-router-dom";
+import React from 'react';
 
-function Home() {
-  const location = useLocation();
-
-  const locationNameWithoutSlash = () => {
-    return location.pathname.substring(1);
-  };
-
-  return (
+const Home = () => {
+  return ( 
     <div>
-      <Typography variant="h3">This is the {locationNameWithoutSlash()} page!</Typography>
-      <Typography>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, exercitationem!</Typography>
+      this is the home page
     </div>
-  );
+   );
 }
-
+ 
 export default Home;

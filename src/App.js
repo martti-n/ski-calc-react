@@ -1,29 +1,32 @@
 import React from "react";
-import { ThemeProvider, makeStyles, styled, useTheme } from "@material-ui/core/styles";
+import { ThemeProvider, makeStyles, styled } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import AcUnit from "@material-ui/icons/AcUnit";
-import Home from "./Components/Pages/Home";
+import Employees from './Components/Pages/AboutUs/Employees';
 import Statistics from "./Components/Pages/Statistics";
 import SkiCalc from "./Components/SkiCalc/SkiCalc";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import TopNav from "./Components/Navigation/TopNav";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import theme from './theme';
+import Home from './Components/Pages/Home';
 
 const MyList = styled(List)({
   width: "100%",
 });
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   drawerPaper: {
     width: "inherit",
     alignItems: "center",
     justifyContent: "center",
   },
   listItem: {
-    paddingTop: "30px",
+    paddingTop: "15px",
+    paddingBottom: "15px",
   },
   pageLayout: {
     paddingTop: "40px",
@@ -36,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
@@ -56,13 +58,23 @@ function App() {
           classes={{ paper: classes.drawerPaper }}
         >
           <MyList>
-            <Link to="/home">
+          <Link to="/" exact>
               <div className={classes.listItem}>
                 <ListItem button>
                   <ListItemIcon>
                     <HomeIcon />
                   </ListItemIcon>
                   <ListItemText primary={"Home"} />
+                </ListItem>
+              </div>
+            </Link>
+            <Link to="/about">
+              <div className={classes.listItem}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"About us"} />
                 </ListItem>
               </div>
             </Link>
@@ -91,9 +103,14 @@ function App() {
         )}
         <div style={{ display: "flex" }}>
           <Switch>
-            <Route path="/home">
+          <Route path="/" exact>
               <div className={classes.pageLayout}>
                 <Home />
+              </div>
+            </Route>
+            <Route path="/about">
+              <div className={classes.pageLayout}>
+                <Employees />
               </div>
             </Route>
             <Route path="/statistics">
