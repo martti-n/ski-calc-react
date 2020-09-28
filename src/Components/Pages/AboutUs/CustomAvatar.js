@@ -4,8 +4,7 @@ import { styled } from '@material-ui/core/styles';
 
 
 const CustomAvatar = (props) => {
-  const colors = ["#f44336", "#4791db", "#4caf50", "#ff9800", "purple", "#e33371", "#115293"];
-  
+  const colors = ["#f44336", "#4791db", "#4caf50", "#ff9800", "purple", "#e33371", "#115293"]; 
   function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }

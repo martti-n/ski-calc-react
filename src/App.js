@@ -5,14 +5,14 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText } from "@material-ui
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import AcUnit from "@material-ui/icons/AcUnit";
-import Employees from './Components/Pages/AboutUs/Employees';
+import Employees from "./Components/Pages/AboutUs/Employees";
 import Statistics from "./Components/Pages/Statistics";
 import SkiCalc from "./Components/SkiCalc/SkiCalc";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import TopNav from "./Components/Navigation/TopNav";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import theme from './theme';
-import Home from './Components/Pages/Home';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import theme from "./theme";
+import Home from "./Components/Pages/Home";
 
 const MyList = styled(List)({
   width: "100%",
@@ -39,84 +39,78 @@ const useStyles = makeStyles(() => ({
 
 function App() {
   const classes = useStyles();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        { isMobile ? (
-        <>
-        <TopNav />
-        </>
+        {isMobile ? (
+          <>
+            <TopNav />
+          </>
         ) : (
           <Drawer
-          style={{ width: "240px" }}
-          variant="persistent"
-          anchor="left"
-          open={true}
-          classes={{ paper: classes.drawerPaper }}
-        >
-          <MyList>
-          <Link to="/" exact>
-              <div className={classes.listItem}>
-                <ListItem button>
-                  <ListItemIcon>
-                    <HomeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Home"} />
-                </ListItem>
-              </div>
-            </Link>
-            <Link to="/about">
-              <div className={classes.listItem}>
-                <ListItem button>
-                  <ListItemIcon>
-                    <HomeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"About us"} />
-                </ListItem>
-              </div>
-            </Link>
-            <Link to="/statistics">
-              <div className={classes.listItem}>
-                <ListItem button>
-                  <ListItemIcon>
-                    <EqualizerIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Statistics"} />
-                </ListItem>
-              </div>
-            </Link>
-            <Link to="/skicalc">
-              <div className={classes.listItem}>
-                <ListItem button>
-                  <ListItemIcon>
-                    <AcUnit />
-                  </ListItemIcon>
-                  <ListItemText primary={"SkiCalc"} />
-                </ListItem>
-              </div>
-            </Link>
-          </MyList>
-        </Drawer>
+            style={{ width: "240px" }}
+            variant="persistent"
+            anchor="left"
+            open={true}
+            classes={{ paper: classes.drawerPaper }}
+          >
+            <MyList>
+              <Link to="/" exact>
+                <div className={classes.listItem}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <HomeIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Home"} />
+                  </ListItem>
+                </div>
+              </Link>
+              <Link to="/about">
+                <div className={classes.listItem}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <HomeIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"About us"} />
+                  </ListItem>
+                </div>
+              </Link>
+              <Link to="/statistics">
+                <div className={classes.listItem}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <EqualizerIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Statistics"} />
+                  </ListItem>
+                </div>
+              </Link>
+              <Link to="/skicalc">
+                <div className={classes.listItem}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <AcUnit />
+                    </ListItemIcon>
+                    <ListItemText primary={"SkiCalc"} />
+                  </ListItem>
+                </div>
+              </Link>
+            </MyList>
+          </Drawer>
         )}
         <div style={{ display: "flex" }}>
           <Switch>
-          <Route path="/" exact>
-              <div className={classes.pageLayout}>
-                <Home />
-              </div>
+            <Route path="/" exact>
+              <Home />
             </Route>
             <Route path="/about">
-              <div className={classes.pageLayout}>
-                <Employees />
-              </div>
+              <Employees />
             </Route>
             <Route path="/statistics">
-              <div className={classes.pageLayout}>
-                <Statistics />
-              </div>
+              <Statistics />
             </Route>
             <Route path="/skicalc">
               <div className={classes.pageLayout}>

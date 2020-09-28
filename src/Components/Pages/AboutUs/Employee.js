@@ -1,11 +1,11 @@
 import React from "react";
 import { styled, makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, CardMedia, CardHeader, Typography, Modal } from "@material-ui/core";
-import CustomAvatar from './CustomAvatar';
+import CustomAvatar from "./CustomAvatar";
 
 const EmployeeCard = styled(Card)({
   marginBottom: "10px",
-  cursor: 'pointer',
+  cursor: "pointer",
   "&:hover": {
     backgroundColor: "#ececec",
   },
@@ -44,22 +44,22 @@ const Employee = (props) => {
     <div>
       <EmployeeCard onClick={() => setOpen(true)}>
         <CardHeader
-          avatar={<CustomAvatar name={props.employee.employee_name}/>}
+          avatar={<CustomAvatar name={props.employee.employee_name} />}
           title={props.employee.employee_name}
           subheader={`${props.employee.employee_age} years of age, makes ${props.employee.employee_salary} $ a year.`}
         />
       </EmployeeCard>
-      { open ? (
+      {open ? (
         <Modal
-        className={classes.modal}
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
-      ) : (null) }
+          className={classes.modal}
+          open={open}
+          onClose={() => setOpen(false)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {body}
+        </Modal>
+      ) : null}
     </div>
   );
 };

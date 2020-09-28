@@ -29,9 +29,20 @@ const theme = createMuiTheme({
         outline: 'none !important'
       }
     },
+    MuiButtonBase: {
+      root: {
+        outline: 'none !important'
+      }
+    },
     MuiCard: {
       root: {
         outline: 'none !important'
+      }
+    },
+    MuiCardActions: {
+      root: {
+        display: 'center',
+        justifyContent: 'center'
       }
     }
   },
