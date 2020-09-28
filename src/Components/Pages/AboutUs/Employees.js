@@ -1,14 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid } from "@material-ui/core";
-import { useAxiosGet } from "../../httpRequests/HttpRequests";
+import { useAxiosGet } from "../../httpRequests/getEmployees";
 import Employee from "./Employee";
 import PersonOfTheDay from "./PersonOfTheDay";
-import WorkWeHaveDone from "./WorkWeHaveDone";
-
-function getRandomIndex(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
+import Partners from "./Partners";
+import { getRandomInt } from '../../functions/randomIntreger';
+import config from '../../../config';
 
 const useStyles = makeStyles(() => ({
   pageLayout: {
@@ -26,13 +24,11 @@ const useStyles = makeStyles(() => ({
 function Employees() {
   const classes = useStyles();
   let content = null;
-  const url = "http://dummy.restapiexample.com/api/v1/employees";
-
   let personOfToday = null;
-
-  const employees = useAxiosGet(url);
+  
+  const employees = useAxiosGet(`${config.DummyApiUrl}/employees`);
   if (employees.data) {
-    personOfToday = employees.data[getRandomIndex(employees.data.length)];
+    personOfToday = employees.data[getRandomInt(employees.data.length)];
   }
 
   if (employees.loading) {
@@ -46,7 +42,7 @@ function Employees() {
   if (employees.data) {
     content = employees.data.map((employee, key) => (
       <div key={key}>
-        <Employee employee={employee} />
+        <Employee employee={employee}/>
       </div>
     ));
   }
@@ -60,13 +56,13 @@ function Employees() {
               {employees.data ? (
                 <PersonOfTheDay person={personOfToday} />
               ) : (
-                <div className={classes.center}>
-                  <CircularProgress />
-                </div>
-              )}
+                  <div className={classes.center}>
+                    <CircularProgress />
+                  </div>
+                )}
             </Grid>
             <Grid item xs={12}>
-              <WorkWeHaveDone />
+              <Partners />
             </Grid>
           </Grid>
           <Grid item xs={4}>
