@@ -6,13 +6,16 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import AcUnit from "@material-ui/icons/AcUnit";
 import Employees from "./Components/Pages/AboutUs/Employees";
-import Statistics from "./Components/Pages/Statistics";
+import Weather from "./Components/Pages/Weather";
 import SkiCalc from "./Components/SkiCalc/SkiCalc";
-import EqualizerIcon from "@material-ui/icons/Equalizer";
 import TopNav from "./Components/Navigation/TopNav";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import theme from "./theme";
 import Home from "./Components/Pages/Home";
+import PublicIcon from "@material-ui/icons/Public";
+import NasaSearch from "./Components/Pages/NasaSearch/NasaSearch";
+import CloudIcon from '@material-ui/icons/Cloud';
+import PeopleIcon from '@material-ui/icons/People';
 
 const MyList = styled(List)({
   width: "100%",
@@ -72,19 +75,19 @@ function App() {
                 <div className={classes.listItem}>
                   <ListItem button>
                     <ListItemIcon>
-                      <HomeIcon />
+                      <PeopleIcon />
                     </ListItemIcon>
                     <ListItemText primary={"About us"} />
                   </ListItem>
                 </div>
               </Link>
-              <Link to="/statistics">
+              <Link to="/weather">
                 <div className={classes.listItem}>
                   <ListItem button>
                     <ListItemIcon>
-                      <EqualizerIcon />
+                      <CloudIcon />
                     </ListItemIcon>
-                    <ListItemText primary={"Statistics"} />
+                    <ListItemText primary={"Weather"} />
                   </ListItem>
                 </div>
               </Link>
@@ -98,10 +101,20 @@ function App() {
                   </ListItem>
                 </div>
               </Link>
+              <Link to="/nasa-search">
+                <div className={classes.listItem}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <PublicIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"NASA images"} />
+                  </ListItem>
+                </div>
+              </Link>
             </MyList>
           </Drawer>
         )}
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", paddingLeft: isMobile ? '0px' : '250px' }}>
           <Switch>
             <Route path="/" exact>
               <Home />
@@ -109,12 +122,17 @@ function App() {
             <Route path="/about">
               <Employees />
             </Route>
-            <Route path="/statistics">
-              <Statistics />
+            <Route path="/weather">
+              <Weather />
             </Route>
             <Route path="/skicalc">
               <div className={classes.pageLayout}>
                 <SkiCalc />
+              </div>
+            </Route>
+            <Route path="/nasa-search">
+              <div className={classes.pageLayout}>
+                <NasaSearch />
               </div>
             </Route>
           </Switch>

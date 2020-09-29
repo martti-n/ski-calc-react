@@ -11,7 +11,6 @@ import config from '../../../config';
 const useStyles = makeStyles(() => ({
   pageLayout: {
     width: "100%",
-    paddingLeft: "250px",
   },
   center: {
     height: "100vh",

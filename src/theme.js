@@ -17,12 +17,6 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
-    MuiInputLabel: {
-      formControl: {
-        right: "25%",
-        left: "30%",
-      },
-    },
     MuiButton: {
       root: {
         color: 'white',
