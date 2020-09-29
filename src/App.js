@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import AcUnit from "@material-ui/icons/AcUnit";
 import Employees from "./Components/Pages/AboutUs/Employees";
-import Weather from "./Components/Pages/Weather";
+import Weather from "./Components/Pages/Weather/Weather";
 import SkiCalc from "./Components/SkiCalc/SkiCalc";
 import TopNav from "./Components/Navigation/TopNav";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -33,6 +33,7 @@ const useStyles = makeStyles(() => ({
   },
   pageLayout: {
     paddingTop: "40px",
+    paddingRight: '20px',
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -53,67 +54,67 @@ function App() {
             <TopNav />
           </>
         ) : (
-          <Drawer
-            style={{ width: "240px" }}
-            variant="persistent"
-            anchor="left"
-            open={true}
-            classes={{ paper: classes.drawerPaper }}
-          >
-            <MyList>
-              <Link to="/" exact>
-                <div className={classes.listItem}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <HomeIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Home"} />
-                  </ListItem>
-                </div>
-              </Link>
-              <Link to="/about">
-                <div className={classes.listItem}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <PeopleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"About us"} />
-                  </ListItem>
-                </div>
-              </Link>
-              <Link to="/weather">
-                <div className={classes.listItem}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <CloudIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Weather"} />
-                  </ListItem>
-                </div>
-              </Link>
-              <Link to="/skicalc">
-                <div className={classes.listItem}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <AcUnit />
-                    </ListItemIcon>
-                    <ListItemText primary={"SkiCalc"} />
-                  </ListItem>
-                </div>
-              </Link>
-              <Link to="/nasa-search">
-                <div className={classes.listItem}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <PublicIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"NASA images"} />
-                  </ListItem>
-                </div>
-              </Link>
-            </MyList>
-          </Drawer>
-        )}
+            <Drawer
+              style={{ width: "240px" }}
+              variant="persistent"
+              anchor="left"
+              open={true}
+              classes={{ paper: classes.drawerPaper }}
+            >
+              <MyList>
+                <Link to="/" exact>
+                  <div className={classes.listItem}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <HomeIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"Home"} />
+                    </ListItem>
+                  </div>
+                </Link>
+                <Link to="/about">
+                  <div className={classes.listItem}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <PeopleIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"About us"} />
+                    </ListItem>
+                  </div>
+                </Link>
+                <Link to="/weather">
+                  <div className={classes.listItem}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <CloudIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"Weather"} />
+                    </ListItem>
+                  </div>
+                </Link>
+                <Link to="/skicalc">
+                  <div className={classes.listItem}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <AcUnit />
+                      </ListItemIcon>
+                      <ListItemText primary={"SkiCalc"} />
+                    </ListItem>
+                  </div>
+                </Link>
+                <Link to="/nasa-search">
+                  <div className={classes.listItem}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <PublicIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"NASA images"} />
+                    </ListItem>
+                  </div>
+                </Link>
+              </MyList>
+            </Drawer>
+          )}
         <div style={{ display: "flex", paddingLeft: isMobile ? '0px' : '250px' }}>
           <Switch>
             <Route path="/" exact>
@@ -123,7 +124,9 @@ function App() {
               <Employees />
             </Route>
             <Route path="/weather">
-              <Weather />
+              <div className={classes.pageLayout}>
+                <Weather />
+              </div>
             </Route>
             <Route path="/skicalc">
               <div className={classes.pageLayout}>
