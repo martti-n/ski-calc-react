@@ -44,7 +44,7 @@ const Employee = (props) => {
     <div>
       <EmployeeCard onClick={() => setOpen(true)}>
         <CardHeader
-          avatar={<CustomAvatar name={props.employee.employee_name}/>}
+          avatar={<CustomAvatar name={props.employee.employee_name} />}
           title={props.employee.employee_name}
           subheader={`${props.employee.employee_age} years of age, makes ${props.employee.employee_salary} $ a year.`}
         />

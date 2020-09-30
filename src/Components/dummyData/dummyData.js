@@ -20,10 +20,10 @@ export function cityData() {
                 lon: '-73.93',
             },
             {
-                name: 'Dubai',
-                city_image: 'https://miro.medium.com/max/760/0*ciOspWdHvVtQR7GB.jpg',
-                lat: '25.27',
-                lon: '55.29',
+                name: 'Otepää',
+                city_image: 'https://static1.visitestonia.com/images/3167747/-1_-1_false_false_9c16efc3330f8dedd768e48dc50eeec4.jpg',
+                lat: '58.04',
+                lon: '26.49',
             },
             {
                 name: 'Oslo',
