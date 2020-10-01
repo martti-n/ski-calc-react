@@ -19,26 +19,26 @@ const theme = createMuiTheme({
   overrides: {
     MuiButton: {
       root: {
-        color: 'white',
-        outline: 'none !important'
-      }
+        color: "white",
+        outline: "none !important",
+      },
     },
     MuiButtonBase: {
       root: {
-        outline: 'none !important'
-      }
+        outline: "none !important",
+      },
     },
     MuiCard: {
       root: {
-        outline: 'none !important'
-      }
+        outline: "none !important",
+      },
     },
     MuiCardActions: {
       root: {
-        display: 'center',
-        justifyContent: 'center'
-      }
-    }
+        display: "center",
+        justifyContent: "center",
+      },
+    },
   },
   props: {
     MuiTextField: {

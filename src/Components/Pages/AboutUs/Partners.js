@@ -39,8 +39,8 @@ const Partners = () => {
   }
 
   if (projects.data) {
-    content = projects.data.map((project) => (
-      <Partner project={project} color={getRandomColor()} />
+    content = projects.data.map((project, key) => (
+      <Partner key={key} project={project} color={getRandomColor()} />
     ))
   }
 

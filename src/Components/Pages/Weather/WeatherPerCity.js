@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Card, CardContent, CardMedia, Modal } from "@material-ui/core";
+import { Typography, Card, CardContent, CardMedia, Modal, Grid } from "@material-ui/core";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
+import TodaysWeatherModal from "./TodaysWeatherModal";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -14,15 +15,17 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    padding: "0 40px",
+  },
+  container: {
     outline: "none !important",
   },
 }));
 
-function getCurrentDate() {
-  var d = new Date(),
-    month = "" + (d.getMonth() + 1),
-    day = "" + d.getDate(),
-    year = d.getFullYear();
+function getCurrentDate(date) {
+  let month = "" + (date.getMonth() + 1),
+    day = "" + date.getDate(),
+    year = date.getFullYear();
 
   if (month.length < 2) month = "0" + month;
   if (day.length < 2) day = "0" + day;
@@ -33,22 +36,43 @@ function getCurrentDate() {
 function WeatherPerCity(props) {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
-  const currentWeather = props.weather.timeseries[0].data.instant.details;
-
   let todaysWeather = [];
+
   function sortWeather() {
     props.weather.timeseries.forEach((timestamp) => {
-      if (timestamp.time.includes(getCurrentDate())) {
-        todaysWeather.push(timestamp);
+
+      // converting the date on weather data to users local timezone
+      const convertedDate = new Date(timestamp.time);
+
+      // checking if incoming data starts from current time, we care of past weather
+      if (convertedDate.getHours() >= new Date().getHours()) {
+
+        // checking if the timestamp is for today
+        if (timestamp.time.includes(getCurrentDate(new Date()))) {
+
+          // checking if timestamp converted to users local timezone fits today(users local)
+          if (convertedDate.getDate() === new Date().getDate()) {
+
+            // setting a new property to timestamp with hours of that date
+            timestamp.localTime = convertedDate.getHours();
+
+            // pushing the date that meets the requirements to array which will be served to children
+            todaysWeather.push(timestamp);
+          }
+        }
       }
     });
   }
+  sortWeather();
+  
+  // setting the current weather from the sorted data 
+  const currentWeather = todaysWeather[0].data.instant.details;
 
-  const body = (
-    <div>
-      <Typography variant="body2">some text</Typography>
-    </div>
-  );
+  const content = todaysWeather.map((weather, key) => (
+    <Grid item key={key}>
+      <TodaysWeatherModal weather={weather} />
+    </Grid>
+  ));
 
   return (
     <div>
@@ -72,7 +96,9 @@ function WeatherPerCity(props) {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
-          {body}
+          <Grid container className={classes.container} spacing={2}>
+            {content}
+          </Grid>
         </Modal>
       ) : null}
     </div>
