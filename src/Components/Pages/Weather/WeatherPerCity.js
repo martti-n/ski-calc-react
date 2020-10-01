@@ -6,6 +6,7 @@ import TodaysWeatherModal from "./TodaysWeatherModal";
 
 const useStyles = makeStyles(() => ({
   card: {
+    cursor: 'pointer',
     textAlign: "center",
   },
   media: {
@@ -18,6 +19,8 @@ const useStyles = makeStyles(() => ({
     padding: "0 40px",
   },
   container: {
+    display: "flex",
+    justifyContent: "center",
     outline: "none !important",
   },
 }));
