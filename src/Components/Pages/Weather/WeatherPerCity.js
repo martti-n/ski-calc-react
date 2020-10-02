@@ -60,7 +60,10 @@ function WeatherPerCity(props) {
             timestamp.localTime = convertedDate.getHours();
 
             // pushing the date that meets the requirements to array which will be served to children
-            todaysWeather.push(timestamp);
+            // small hack to reduse array size...lets think of a better solution
+            if (todaysWeather.length < 14) {
+              todaysWeather.push(timestamp);
+            }
           }
         }
       }
