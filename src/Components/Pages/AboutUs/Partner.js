@@ -23,15 +23,15 @@ function Partner(props) {
         <Grid item xs={3}>
             <Card className={classes.root}>
                 <CardMedia className={classes.media} style={{ backgroundColor: props.color }}>
-                <Typography variant="h5">{props.project.name}</Typography>
+                <Typography variant="h5">{props.partner.name}</Typography>
                 </CardMedia>
                 <CardContent>
-                    <Typography variant="h5">{props.project.name}</Typography>
+                    <Typography variant="h5">{props.partner.name}</Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        { props.project.city }
+                        { props.partner.city }
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        { props.project.country }
+                        { props.partner.country }
                     </Typography>
                 </CardContent>
             </Card>
