@@ -1,31 +1,19 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-  Modal,
-  Grid,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
-} from "@material-ui/core";
+import { Typography, Card, CardContent, CardMedia, Modal, Grid } from "@material-ui/core";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import TodaysWeatherModal from "./TodaysWeatherModal";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { useMutation } from "@apollo/client";
 import queries from "../../graphql/queries";
+import DeleteAlert from "./DeleteAlert";
 
 const useStyles = makeStyles(() => ({
   card: {
-    cursor: "pointer",
     textAlign: "center",
   },
   media: {
+    cursor: "pointer",
     height: "140px",
   },
   modal: {
@@ -40,6 +28,7 @@ const useStyles = makeStyles(() => ({
     outline: "none !important",
   },
   deleteIcon: {
+    cursor: "pointer",
     float: "left",
     marginBottom: "10px",
     color: "#e2e2e2",
@@ -68,7 +57,7 @@ function WeatherPerCity(props) {
   const [openDialog, setDialogOpen] = useState(false);
   const [removeCity, { error }] = useMutation(queries.removeCity, {
     variables: { id: props.weather.id },
-    refetchQueries: [{ query: queries.getCities }]
+    refetchQueries: [{ query: queries.getCities }],
   });
 
   function deleteCity() {
@@ -141,20 +130,12 @@ function WeatherPerCity(props) {
         </Modal>
       ) : null}
       {openDialog ? (
-        <Dialog open={openDialog} onClose={() => setDialogOpen(false)}>
-          <DialogTitle>{`Delete ${props.weather.city}?`}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              This city will be permanently removed. You can add new cities from the dashboard.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions className={classes.dialogActions}>
-            <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
-            <Button autoFocus onClick={() => deleteCity()}>
-              Yes
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <DeleteAlert
+          open={openDialog}
+          cityName={props.weather.city}
+          delete={() => deleteCity()}
+          closeDialog={() => setDialogOpen(false)}
+        />
       ) : null}
     </div>
   );
