@@ -45,9 +45,9 @@ const useStyles = makeStyles(() => ({
     color: "#e2e2e2",
     height: "30px",
     width: "30px",
-    '&:hover': {
-      color:'#ccc'
-    }
+    "&:hover": {
+      color: "#ccc",
+    },
   },
 }));
 
@@ -68,6 +68,7 @@ function WeatherPerCity(props) {
   const [openDialog, setDialogOpen] = useState(false);
   const [removeCity, { error }] = useMutation(queries.removeCity, {
     variables: { id: props.weather.id },
+    refetchQueries: [{ query: queries.getCities }]
   });
 
   function deleteCity() {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import WeatherPerCity from "./WeatherPerCity";
-import { Grid, Typography, Modal, TextField, Button } from "@material-ui/core";
+import { Grid, Typography, Modal, TextField, Button, CircularProgress } from "@material-ui/core";
 import axios from "axios";
 import { useQuery, useMutation } from "@apollo/client";
 import queries from "../../graphql/queries";
@@ -9,10 +9,13 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   icon: {
-    cursor: 'pointer',
-    color: '#e2e2e2',
+    cursor: "pointer",
+    color: "#e2e2e2",
     height: "40px",
     width: "40px",
+    "&:hover": {
+      color: "#ccc",
+    },
   },
   center: {
     display: "flex",
@@ -32,14 +35,12 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
   },
   modalBody: {
-    padding: "20px",
+    padding: "40px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     backgroundColor: "#fff",
     borderRadius: "20px",
-    height: "400px",
-    width: "300px",
     outline: "none !important",
   },
 }));
@@ -54,17 +55,24 @@ function getTodaysDate() {
 
 function Weather() {
   const classes = useStyles();
-  const [name, setName] = React.useState('');
-  const [image, setImage] = React.useState('');
+
+  // setting the form data for new city
+  const [name, setName] = React.useState("");
+  const [image, setImage] = React.useState("");
   const [latitude, setLatitude] = React.useState(0);
   const [longitude, setLongitude] = React.useState(0);
+
   const [open, setOpen] = React.useState(false);
   const [weather, setWeather] = React.useState({ data: null, loading: false });
-  const [createCity, { error }] = useMutation(queries.addCity, {
+
+  // using graphql queries
+  const [createCity] = useMutation(queries.addCity, {
     variables: { name, image, latitude, longitude },
-    refetchQueries: ["cities"],
+    refetchQueries: [{ query: queries.getCities }],
   });
-  const { data } = useQuery(queries.getCities);
+
+  const { data, loading } = useQuery(queries.getCities);
+
   let content = null;
 
   useEffect(() => {
@@ -93,8 +101,24 @@ function Weather() {
   }, [data]);
 
   function addCity() {
-    createCity();
-    setOpen(false);
+    
+    //added temporary validation so empty cities couldn't be added
+    // TODO: use Formik or similar tool for validating each input
+    if (name === "" || image === "" || latitude === 0 || longitude === 0) {
+      setOpen(false);
+      return false;
+    } else {
+      setOpen(false);
+      createCity();
+    }
+  }
+
+  if (loading) {
+    content = (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (weather.data) {
@@ -113,15 +137,19 @@ function Weather() {
       <TextField className={classes.marginSmall} label="Enter name" onChange={(e) => setName(e.target.value)} />
       <TextField className={classes.marginSmall} label="Enter image url" onChange={(e) => setImage(e.target.value)} />
       <TextField className={classes.marginSmall} label="Enter latitude" onChange={(e) => setLatitude(e.target.value)} />
-      <TextField className={classes.marginSmall} label="Enter longitude" onChange={(e) => setLongitude(e.target.value)} />
-      <Button style={{marginTop: '15px'}} onClick={() => addCity()}>
+      <TextField
+        className={classes.marginSmall}
+        label="Enter longitude"
+        onChange={(e) => setLongitude(e.target.value)}
+      />
+      <Button style={{ marginTop: "15px" }} onClick={() => addCity()}>
         Submit
       </Button>
     </div>
   );
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} className={classes.center}>
       <Grid item xs={12}>
         <Typography variant="h4" style={{ textAlign: "center" }}>
           {getTodaysDate()}
@@ -135,7 +163,7 @@ function Weather() {
       </Grid>
       {content}
       <Grid item xs={12} className={classes.center}>
-        <AddCircleIcon className={classes.icon} onClick={() => setOpen(true)} />
+        {loading ? null : <AddCircleIcon className={classes.icon} onClick={() => setOpen(true)} />}
       </Grid>
       {open ? (
         <Modal
