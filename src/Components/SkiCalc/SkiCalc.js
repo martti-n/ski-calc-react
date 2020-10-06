@@ -4,17 +4,6 @@ import { TextField, Button, Select, MenuItem } from "@material-ui/core";
 import Results from "./Results";
 import { useLocation } from 'react-router-dom';
 
-const CalculateButton = styled(Button)({
-  background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-  border: 0,
-  borderRadius: 3,
-  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-  color: "white",
-  height: 48,
-  padding: "0 30px",
-  outline: 'none !important' 
-});
-
 function SkiCalc() {
   const [height, setHeight] = useState("");
   const [amountOfResults, setAmountOfResults] = useState(15);
@@ -69,9 +58,9 @@ function SkiCalc() {
         </Select>
       </div>
       <div className="flex justify-center mb-4">
-        <CalculateButton onClick={() => setResults(calculateSkis())}>
+        <Button onClick={() => setResults(calculateSkis())}>
           Calculate
-        </CalculateButton>
+        </Button>
       </div>
       <div className="flex justify-center mb-4">
         <Results resultItems={results} />

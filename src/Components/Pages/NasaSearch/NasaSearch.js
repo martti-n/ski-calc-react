@@ -6,17 +6,6 @@ import axios from "axios";
 import NasaSearchItem from "./NasaSearchItem";
 // https://images-api.nasa.gov/search?q={query}&media_type=image
 
-const SearchButton = styled(Button)({
-  background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-  border: 0,
-  borderRadius: 3,
-  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-  color: "white",
-  height: 48,
-  padding: "0 30px",
-  outline: 'none !important' 
-});
-
 const MyCard = styled(Card)({
   maxWidth: "610px",
   margin: "0 auto",
@@ -88,7 +77,7 @@ function NasaSearch() {
           </div>
         </CardContent>
         <CardActions className={classes.center}>
-          <SearchButton onClick={() => getResults()}>search</SearchButton>
+          <Button onClick={() => getResults()}>search</Button>
         </CardActions>
       </MyCard>
       <Grid container spacing={2} style={{ marginTop: "15px" }} className={classes.center}>

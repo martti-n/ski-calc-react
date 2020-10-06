@@ -19,8 +19,14 @@ const theme = createMuiTheme({
   overrides: {
     MuiButton: {
       root: {
+        background: "linear-gradient(45deg, #42A5F5 30%, #1E88E5 90%)",
+        border: 0,
+        borderRadius: 3,
+        boxShadow: "0 3px 5px 2px rgba(113, 157, 239, .3)",
         color: "white",
-        outline: "none !important",
+        height: 42,
+        padding: "0 40px",
+        outline: 'none !important'
       },
     },
     MuiButtonBase: {
