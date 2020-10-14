@@ -4,7 +4,7 @@ import { makeStyles, styled } from "@material-ui/core/styles";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 
-const TextRow = styled(Typography) ({
+const TextRow = styled(Typography)({
   margin: '6px 0'
 })
 
@@ -24,22 +24,22 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TodaysWeatherModal = (props) => {
+const WeatherComponent = (props) => {
   const classes = useStyles();
   const weatherData = props.weather.data.instant.details;
 
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.media} image={process.env.PUBLIC_URL + `/yrnoIcons/${props.weather.data.next_1_hours.summary.symbol_code}.png`}/>
+      <CardMedia className={classes.media} image={process.env.PUBLIC_URL + `/yrnoIcons/${props.weather.data.next_1_hours.summary.symbol_code}.png`} />
       <CardContent>
         <TextRow variant="h5">
           {props.weather.localTime}:00
-          <ScheduleIcon className={classes.icon}/>
+          <ScheduleIcon className={classes.icon} />
         </TextRow>
         <Divider />
         <TextRow variant="h4">{weatherData.air_temperature}&#x2103;</TextRow>
         <TextRow>
-        {props.weather.data.next_1_hours.details.precipitation_amount} mm
+          {props.weather.data.next_1_hours.details.precipitation_amount} mm
         </TextRow>
         <TextRow variant="body2">
           {weatherData.wind_speed} m/s
@@ -51,4 +51,4 @@ const TodaysWeatherModal = (props) => {
   );
 };
 
-export default TodaysWeatherModal;
+export default WeatherComponent;

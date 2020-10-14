@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Card, CardContent, CardMedia, Modal, Grid } from "@material-ui/core";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
-import TodaysWeatherModal from "./TodaysWeatherModal";
+import WeatherComponent from "./WeatherComponent";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { useMutation } from "@apollo/client";
 import queries from "../../graphql/queries";
@@ -68,12 +68,12 @@ function WeatherPerCity(props) {
   const classes = useStyles();
   let todaysWeather = [];
 
-  function sortWeather() {
+  function sortTodaysWeather() {
+    //console.log(props.weather.timeseries)
     props.weather.timeseries.forEach((timestamp) => {
       // converting the date on weather data to users local timezone
       const convertedDate = new Date(timestamp.time);
-
-      // checking if incoming data starts from current time, we care of past weather
+      // checking if incoming data starts from current time, we don't care of past weather
       if (convertedDate.getHours() >= new Date().getHours()) {
         // checking if the timestamp is for today
         if (timestamp.time.includes(getCurrentDate(new Date()))) {
@@ -83,7 +83,7 @@ function WeatherPerCity(props) {
             timestamp.localTime = convertedDate.getHours();
 
             // pushing the date that meets the requirements to array which will be served to children
-            // small hack to reduse array size...lets think of a better solution
+            // small hack to reduce array size...lets think of a better solution
             if (todaysWeather.length < 14) {
               todaysWeather.push(timestamp);
             }
@@ -92,14 +92,14 @@ function WeatherPerCity(props) {
       }
     });
   }
-  sortWeather();
+  sortTodaysWeather();
 
   // setting the current weather from the sorted data
   const currentWeather = todaysWeather[0].data.instant.details;
 
   const content = todaysWeather.map((weather, key) => (
     <Grid item key={key}>
-      <TodaysWeatherModal weather={weather} />
+      <WeatherComponent weather={weather} />
     </Grid>
   ));
 

@@ -101,8 +101,8 @@ function Weather() {
   }, [data]);
 
   function addCity() {
-    
-    //added temporary validation so empty cities couldn't be added
+
+    // added temporary validation so empty cities couldn't be added
     // TODO: use Formik or similar tool for validating each input
     if (name === "" || image === "" || latitude === 0 || longitude === 0) {
       setOpen(false);
