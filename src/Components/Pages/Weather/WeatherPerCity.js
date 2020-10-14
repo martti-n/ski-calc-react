@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Card, CardContent, CardMedia, Modal, Grid } from "@material-ui/core";
+import { Typography, Card, CardContent, CardMedia, Modal, Grid, CardActions, Button } from "@material-ui/core";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import WeatherComponent from "./WeatherComponent";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -13,14 +13,12 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
   },
   media: {
-    cursor: "pointer",
     height: "140px",
   },
   modal: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "0 40px",
+    padding: "40px 40px",
+    overflowY: 'scroll'
   },
   container: {
     display: "flex",
@@ -55,58 +53,76 @@ function WeatherPerCity(props) {
   const [showingIcon, showIcon] = useState(false);
   const [open, setOpen] = useState(false);
   const [openDialog, setDialogOpen] = useState(false);
+  const [modalType, setModalType] = useState('');
   const [removeCity, { error }] = useMutation(queries.removeCity, {
     variables: { id: props.weather.id },
     refetchQueries: [{ query: queries.getCities }],
   });
-
-  function deleteCity() {
-    removeCity();
-    setDialogOpen(false);
-  }
-
   const classes = useStyles();
   let todaysWeather = [];
+  let tomorrowsWeather = [];
+  let content = null;
 
-  function sortTodaysWeather() {
-    //console.log(props.weather.timeseries)
+  // converting the date on weather data to users local timezone
+  // checking if incoming data starts from current time, we don't care of past weather
+  // checking if the timestamp is for today
+  // checking if timestamp converted to users local timezone fits today(users local)
+  // setting a new property to timestamp with hours of that date
+  // pushing the date that meets the requirements to array which will be served to children
+
+  function sortWeather() {
+
     props.weather.timeseries.forEach((timestamp) => {
-      // converting the date on weather data to users local timezone
       const convertedDate = new Date(timestamp.time);
-      // checking if incoming data starts from current time, we don't care of past weather
       if (convertedDate.getHours() >= new Date().getHours()) {
-        // checking if the timestamp is for today
         if (timestamp.time.includes(getCurrentDate(new Date()))) {
-          // checking if timestamp converted to users local timezone fits today(users local)
           if (convertedDate.getDate() === new Date().getDate()) {
-            // setting a new property to timestamp with hours of that date
             timestamp.localTime = convertedDate.getHours();
-
-            // pushing the date that meets the requirements to array which will be served to children
-            // small hack to reduce array size...lets think of a better solution
             if (todaysWeather.length < 14) {
               todaysWeather.push(timestamp);
             }
           }
         }
       }
+      if (convertedDate.getDate() === new Date().getDate() + 1) {
+        timestamp.localTime = convertedDate.getHours();
+        tomorrowsWeather.push(timestamp);
+      }
     });
   }
-  sortTodaysWeather();
 
-  // setting the current weather from the sorted data
+  sortWeather();
+
   const currentWeather = todaysWeather[0].data.instant.details;
 
-  const content = todaysWeather.map((weather, key) => (
-    <Grid item key={key}>
-      <WeatherComponent weather={weather} />
-    </Grid>
-  ));
+  function alignmentProperties() {
+    return modalType === 'today' ? 'center' : '';
+  }
+  function deleteCity() {
+    removeCity();
+    setDialogOpen(false);
+  }
+
+  // setting the current weather from the sorted data
+  if (modalType === 'today') {
+    content = todaysWeather.map((weather, key) => (
+      <Grid item key={key}>
+        <WeatherComponent weather={weather} />
+      </Grid>
+    ));
+  }
+  if (modalType === 'tomorrow') {
+    content = tomorrowsWeather.map((weather, key) => (
+      <Grid item key={key}>
+        <WeatherComponent weather={weather} />
+      </Grid>
+    ));
+  }
 
   return (
     <div>
       <Card className={classes.card} onMouseEnter={() => showIcon(true)} onMouseLeave={() => showIcon(false)}>
-        <CardMedia image={props.weather.city_image} className={classes.media} onClick={() => setOpen(true)} />
+        <CardMedia image={props.weather.city_image} className={classes.media} />
         <CardContent>
           <Typography variant="h5">{props.weather.city}</Typography>
           <Typography variant="h4">{currentWeather.air_temperature}&#x2103;</Typography>
@@ -121,9 +137,30 @@ function WeatherPerCity(props) {
             ) : null}
           </div>
         </CardContent>
+        <CardActions>
+          <Button onClick={() => {
+            setModalType('today');
+            setOpen(true);
+          }}>
+            Today
+        </Button>
+          <Button onClick={() => {
+            setModalType('tomorrow');
+            setOpen(true);
+          }}>
+            Tomorrow
+        </Button>
+        </CardActions>
       </Card>
       {open ? (
-        <Modal className={classes.modal} open={open} onClose={() => setOpen(false)}>
+        <Modal
+          className={classes.modal}
+          style={{
+            alignItems: alignmentProperties(),
+            justifyContent: alignmentProperties()
+          }}
+          open={open}
+          onClose={() => setOpen(false)}>
           <Grid container className={classes.container} spacing={2}>
             {content}
           </Grid>
